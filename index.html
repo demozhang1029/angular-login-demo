@@ -6,55 +6,10 @@
     <link rel="stylesheet" href="home.css">
     <script src="node_modules/angular/angular.js"></script>
     <script src="node_modules/angular-resource/angular-resource.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
     <script src="loginController.js"></script>
 </head>
-<body>
-    <div ng-app="loginModule">
-        <div class="login" ng-controller="loginCtrl">
-            <header>
-                <div class="login-header">
-                    <span class="msg">Login</span>
-                    <div class="lan">
-                        <span class="white">Select Locale</span>
-                        <select>
-                            <option ng-repeat="lan in languages">{{lan}}</option>
-                        </select>
-                    </div>
-                </div>
-            </header>
-            <form ng-submit="login()">
-                <div class="login-body">
-                    <p class="red" align="center">{{result}}</p>
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label text-style">Username<span class="red">*</span></label>
-                            <div class="col-sm-10 space-a">
-                                <input type="text" class="form-control" id="username" placeholder={{usernamePlaceholder}} ng-model="username">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-sm-2 control-label text-style">Password<span class="red">*</span></label>
-                            <div class="col-sm-10 space-a">
-                                <input type="password" class="form-control" id="password" placeholder={{passwordPlaceholder}} ng-model="password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="location" class="col-sm-2 control-label text-style">Location<span class="red">*</span></label>
-                            <div class="col-sm-10 space-a">
-                                <select class="form-control" id="location" ng-model="currentLocation">
-                                    <option ng-repeat="location in locations">{{location}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default footer-btn">Login</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </form>
-        </div>
-    </div>
+<body ng-app="loginApp">
+    <ng-view></ng-view>
 </body>
 </html>

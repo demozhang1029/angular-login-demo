@@ -1,13 +1,25 @@
 angular
-    .module('loginModule', ['ngResource'])
-    .controller('loginCtrl', ($scope, $resource) => {
+    .module('loginApp', ['ngResource', 'ngRoute'])
+    .config(['$locationProvider', function($locationProvider) {
+        $locationProvider.hashPrefix('');
+    }])
+    .config(['$routeProvider', function($routeProvider){
+        $routeProvider
+            .when("/", {
+                templateUrl: 'login.html',
+                controller: 'loginCtrl'
+            })
+            .when("/welcome", {
+                templateUrl: 'welcome.html'
+            });
+    }])
+    .controller('loginCtrl', ['$scope', '$resource', function($scope, $resource){
         var LOGIN_SUCCESS = 0;
         var CONNECT_FAIL = -1;
         $scope.login = () => {
             if ($scope.currentLocation == 'Select Location') {
                 $scope.result = 'Please select an item in the list'
             }
-
             var LoginConn = $resource('http://localhost:8080/login');
             LoginConn.save({}, {'username': $scope.username, 'password': $scope.password},
                 function (response) {
@@ -36,4 +48,4 @@ angular
         $scope.usernamePlaceholder = 'Enter your username';
         $scope.passwordPlaceholder = 'Enter your password';
         $scope.currentLocation = 'Registration Desk';
-    });
+    }]);

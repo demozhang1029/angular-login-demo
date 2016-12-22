@@ -17,8 +17,9 @@
   },
   "homepage": "https://github.com/demozhang1029/angular-login-demo#readme",
   "dependencies": {
-    "angular": "^1.5.9",
+    "angular": "^1.6.0",
     "angular-resource": "^1.6.0",
+    "angular-route": "^1.6.0",
     "bootstrap": "^3.3.7",
     "jquery": "^3.1.1"
   }

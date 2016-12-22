@@ -13,9 +13,12 @@ angular
                 templateUrl: 'welcome.html'
             });
     }])
-    .controller('loginCtrl', ['$scope', '$resource', function($scope, $resource){
+    .controller('loginCtrl', ['$scope', '$resource', '$location', function($scope, $resource, $location){
         var LOGIN_SUCCESS = 0;
         var CONNECT_FAIL = -1;
+        var jump = (url) => {
+            $location.path(url);
+        };
         $scope.login = () => {
             if ($scope.currentLocation == 'Select Location') {
                 $scope.result = 'Please select an item in the list'
@@ -25,6 +28,7 @@ angular
                 function (response) {
                     if (response.status == LOGIN_SUCCESS) {
                         $scope.result = 'Login Success';
+                        jump('/welcome');
                     } else {
                         $scope.result = 'You are not authenticated or your session expired. Please login.';
                     }

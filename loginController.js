@@ -6,11 +6,11 @@ angular
     .config(['$routeProvider', function($routeProvider){
         $routeProvider
             .when("/", {
-                templateUrl: 'login.html',
+                templateUrl: 'views/login.html',
                 controller: 'loginCtrl'
             })
             .when("/welcome", {
-                templateUrl: 'welcome.html'
+                templateUrl: 'views/welcome.html'
             });
     }])
     .controller('loginCtrl', ['$scope', '$resource', '$location', function($scope, $resource, $location){

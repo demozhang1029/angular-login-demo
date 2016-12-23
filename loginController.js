@@ -18,12 +18,12 @@ angular
             if ($scope.currentLocation == constantService.LOCATION_MSG.NULL) {
                 $scope.result = constantService.SHOW_MSG.UN_SELECT;
             }
-            var LoginConn = $resource(constantService.CONN_URL);
+            var LoginConn = $resource(constantService.URL.LOGIN_API);
             LoginConn.save({}, {'username': $scope.username, 'password': $scope.password},
                 function (response) {
                     if (response.status == constantService.HTTP_STATUS.LOGIN_SUCCESS) {
                         $scope.result = constantService.SHOW_MSG.LOGIN_SUCCESS;
-                        toolService.Jump('/welcome');
+                        toolService.Jump(constantService.URL.JUMP);
                     } else {
                         $scope.result = constantService.SHOW_MSG.LOGIN_FAIL;
                     }
@@ -47,7 +47,7 @@ angular
             PLACEHOLDER: {USERNAME: 'Enter your username', PASSWORD: 'Enter your password'},
             HTTP_STATUS: {LOGIN_SUCCESS: 0, CONNECT_FAIL: -1},
             LOCATION_MSG: {INIT: 'Registration Desk', NULL: 'Select Location'},
-            CONN_URL: "http://localhost:8080/login",
+            URL: {LOGIN_API: 'http://localhost:8080/login', JUMP: '/welcome'},
             SHOW_MSG: {
                 LOGIN_SUCCESS: 'Login Success',
                 LOGIN_FAIL: 'You are not authenticated or your session expired. Please login.',

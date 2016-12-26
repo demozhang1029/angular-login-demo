@@ -16,31 +16,37 @@
                 });
         }])
         .controller('loginCtrl', ['$scope', '$resource', 'toolService', 'constantService',function($scope, $resource, toolService, constantService){
+            var isSelected = () => {
+                return $scope.view.currentLocation != constantService.LOCATION_MSG.NULL;
+            };
+
             $scope.login = () => {
-                if ($scope.currentLocation == constantService.LOCATION_MSG.NULL) {
+                if (isSelected()) {
+                    var LoginConn = $resource(constantService.URL.LOGIN_API);
+                    LoginConn.save({}, {'username': $scope.username, 'password': $scope.password},
+                        function (response) {
+                            if (response.status == constantService.HTTP_STATUS.LOGIN_SUCCESS) {
+                                $scope.result = constantService.SHOW_MSG.LOGIN_SUCCESS;
+                                toolService.Jump(constantService.URL.JUMP);
+                            } else {
+                                $scope.result = constantService.SHOW_MSG.LOGIN_FAIL;
+                            }
+                        },
+                        function (response) {
+                            if (response.status == constantService.HTTP_STATUS.CONNECT_FAIL) {
+                                $scope.result = constantService.SHOW_MSG.CONN_FAIL;
+                            }
+                        });
+                } else {
                     $scope.result = constantService.SHOW_MSG.UN_SELECT;
                 }
-                var LoginConn = $resource(constantService.URL.LOGIN_API);
-                LoginConn.save({}, {'username': $scope.username, 'password': $scope.password},
-                    function (response) {
-                        if (response.status == constantService.HTTP_STATUS.LOGIN_SUCCESS) {
-                            $scope.result = constantService.SHOW_MSG.LOGIN_SUCCESS;
-                            toolService.Jump(constantService.URL.JUMP);
-                        } else {
-                            $scope.result = constantService.SHOW_MSG.LOGIN_FAIL;
-                        }
-                    },
-                    function (response) {
-                        if (response.status == constantService.HTTP_STATUS.CONNECT_FAIL) {
-                            $scope.result = constantService.SHOW_MSG.CONN_FAIL;
-                        }
-                    });
             };
-            $scope.locations = constantService.LOCATION;
-            $scope.languages = constantService.LANGUAGE;
-            $scope.usernamePlaceholder = constantService.PLACEHOLDER.USERNAME;
-            $scope.passwordPlaceholder = constantService.PLACEHOLDER.PASSWORD;
-            $scope.currentLocation = constantService.LOCATION_MSG.INIT;
+            $scope.view = {
+                locations: constantService.LOCATION,
+                languages: constantService.LANGUAGE,
+                placeholder: constantService.PLACEHOLDER,
+                currentLocation: constantService.LOCATION_MSG.INIT
+            };
         }])
         .factory('constantService', function() {
             return {
